@@ -1,0 +1,152 @@
+# Pipeline configuration
+project_name: "churn-prediction"
+model_type: "xgboost"
+
+# Data configuration
+data:
+  target_column: "Churn"
+  positive_class: "Yes"
+  negative_class: "No"
+  test_size: 0.2
+  validation_size: 0.1
+  random_state: 42
+
+# Feature engineering
+features:
+  numerical_columns:
+    - "SeniorCitizen"
+    - "tenure"
+    - "MonthlyCharges"
+    - "TotalCharges"
+  categorical_columns:
+    - "gender"
+    - "Partner"
+    - "Dependents"
+    - "PhoneService"
+    - "MultipleLines"
+    - "InternetService"
+    - "OnlineSecurity"
+    - "OnlineBackup"
+    - "DeviceProtection"
+    - "TechSupport"
+    - "StreamingTV"
+    - "StreamingMovies"
+    - "Contract"
+    - "PaperlessBilling"
+    - "PaymentMethod"
+  drop_columns:
+    - "customerID"
+
+# Model configuration
+model:
+  name: "xgboost"
+  registered_model_name: "CustomerChurnXGBoost"
+  xgboost:
+    n_estimators: 100
+    max_depth: 6
+    learning_rate: 0.1
+    subsample: 0.8
+    colsample_bytree: 0.8
+    min_child_weight: 1
+    gamma: 0
+    reg_alpha: 0
+    reg_lambda: 1
+    random_state: 42
+
+  random_forest:
+    n_estimators: 100
+    max_depth: 10
+    min_samples_split: 5
+    min_samples_leaf: 2
+    random_state: 42
+
+  experiments:
+    - name: "xgboost_v1_baseline"
+      description: "Initial baseline configuration"
+      hyperparameters:
+        n_estimators: 100
+        max_depth: 3
+        learning_rate: 0.1
+        subsample: 0.8
+        colsample_bytree: 0.8
+        min_child_weight: 1
+        gamma: 0
+        reg_alpha: 0
+        reg_lambda: 1
+
+    - name: "xgboost_v2"
+      description: "Increased tree depth and estimators"
+      hyperparameters:
+        n_estimators: 200
+        max_depth: 5
+        learning_rate: 0.05
+        subsample: 0.8
+        colsample_bytree: 0.9
+        min_child_weight: 3
+        gamma: 0.1
+        reg_alpha: 0.01
+        reg_lambda: 2
+
+    - name: "xgboost_v3"
+      description: "Lower learning rate with more estimators"
+      hyperparameters:
+        n_estimators: 300
+        max_depth: 6
+        learning_rate: 0.03
+        subsample: 0.9
+        colsample_bytree: 0.9
+        min_child_weight: 3
+        gamma: 0.1
+        reg_alpha: 0.1
+        reg_lambda: 5
+
+    - name: "xgboost_v4"
+      description: "Stronger regularization"
+      hyperparameters:
+        n_estimators: 400
+        max_depth: 4
+        learning_rate: 0.05
+        subsample: 0.7
+        colsample_bytree: 0.8
+        min_child_weight: 5
+        gamma: 0.2
+        reg_alpha: 0.5
+        reg_lambda: 5
+
+    - name: "xgboost_v5"
+      description: "Deeper trees with higher regularization"
+      hyperparameters:
+        n_estimators: 500
+        max_depth: 8
+        learning_rate: 0.01
+        subsample: 0.9
+        colsample_bytree: 0.7
+        min_child_weight: 7
+        gamma: 0.3
+        reg_alpha: 1
+        reg_lambda: 10
+
+# Training configuration
+training:
+  cv_folds: 5
+  scoring: "roc_auc"
+  early_stopping_rounds: 10
+  eval_metric: "logloss"
+
+# Evaluation thresholds
+evaluation:
+  accuracy_threshold: 0.7
+  precision_threshold: 0.7
+  recall_threshold: 0.7
+  f1_threshold: 0.7
+  roc_auc_threshold: 0.75
+
+# Model promotion
+promotion:
+  threshold: 0.8
+  metric: "roc_auc"
+
+# Logging
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"

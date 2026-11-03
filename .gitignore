@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Environment / secrets
+.env
+
+# Data (gitignored except .gitkeep)
+data/raw/*
+data/processed/*
+data/external/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/external/.gitkeep
+
+# Model cache (gitignored except .gitkeep)
+model/*
+!model/.gitkeep
+
+# MLflow
+mlruns/
+mlartifacts/
+mlflow.db
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+
+# Airflow (docker compose runtime files)
+airflow/logs/*
+!airflow/logs/.gitkeep
+airflow/config/*
+!airflow/config/.gitkeep
+airflow/plugins/*
+!airflow/plugins/.gitkeep
