@@ -51,7 +51,7 @@ class ModelLoader:
         except Exception as e:
             logger.error("Local model load failed", error=str(e))
             raise ModelLoadError(
-                f"Failed to load model from deployment artifact: {str(e)}",
+                f"Failed to load model from deployment artifact: {e!s}",
                 details={"error": str(e)},
             ) from e
 
@@ -83,14 +83,12 @@ class ModelLoader:
             metadata = model_data.get("metadata", {})
             self._model_version = metadata.get("best_experiment", "local")
             gate_metrics = metadata.get("gate_metrics", {})
-            train_metrics = metadata.get("train_metrics", {})
 
             trained_at = datetime.now(tz=timezone.utc).isoformat()
             self._model_info = {
                 "version": self._model_version,
                 "trained_at": trained_at,
                 "metrics": gate_metrics,
-                "train_metrics": train_mrics,
                 "experiment": metadata.get("best_experiment"),
             }
 
@@ -108,7 +106,7 @@ class ModelLoader:
             raise
         except Exception as e:
             raise ModelLoadError(
-                f"Failed to load model from deployment artifact: {str(e)}",
+                f"Failed to load model from deployment artifact: {e!s}",
                 details={"error": str(e)},
             ) from e
 

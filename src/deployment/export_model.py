@@ -10,7 +10,6 @@ from pathlib import Path
 
 import joblib
 
-from src.config.pipeline_config import load_pipeline_config
 from src.utils.exceptions import ModelTrainingError
 from src.utils.logger import get_logger
 
@@ -72,7 +71,7 @@ def export_approved_model() -> None:
         raise
     except Exception as e:
         raise ModelTrainingError(
-            f"Model export failed: {str(e)}",
+            f"Model export failed: {e!s}",
             details={"error": str(e)},
         ) from e
 

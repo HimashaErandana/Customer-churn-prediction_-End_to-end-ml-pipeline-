@@ -14,8 +14,8 @@ from src.data_processing.clean import DataCleaner
 from src.data_processing.transform import DataTransformer
 from src.deployment.export_model import export_approved_model
 from src.evaluation.evaluate import ModelEvaluator
-from src.training.experiment_runner import ExperimentRunner
 from src.features.feature_engineering import FeatureBuilder
+from src.training.experiment_runner import ExperimentRunner
 from src.utils.logger import get_logger, setup_logging
 from src.validation.validate import DataValidator
 
@@ -35,7 +35,9 @@ def run_pipeline() -> None:
     logger.info("stage_started", stage="ingest", step="1/7")
     ingestor = DataIngestor(config)
     df = ingestor.run(str(RAW_DATA_PATH))
-    logger.info("stage_completed", stage="ingest", rows=df.shape[0], columns=df.shape[1])
+    logger.info(
+        "stage_completed", stage="ingest", rows=df.shape[0], columns=df.shape[1]
+    )
 
     # Step 2: Validate
     logger.info("stage_started", stage="validate", step="2/7")
@@ -86,7 +88,9 @@ def run_pipeline() -> None:
     best = max(experiment_results, key=lambda r: r["metrics"]["roc_auc"])
     model = best["model"]
     train_metrics = best["metrics"]
-    print(f"Best model chosen: {best['experiment_name']} with roc_auc={best['metrics']['roc_auc']:.4f}")
+    print(
+        f"Best model chosen: {best['experiment_name']} with roc_auc={best['metrics']['roc_auc']:.4f}"
+    )
     logger.info(
         "stage_completed",
         stage="train",
