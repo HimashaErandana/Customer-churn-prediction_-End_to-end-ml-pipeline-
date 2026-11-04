@@ -5,7 +5,7 @@ MLflow is NOT used at serving time — the model, label encoders, and metadata
 are bundled directly in the artifact.
 """
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -84,7 +84,7 @@ class ModelLoader:
             self._model_version = metadata.get("best_experiment", "local")
             gate_metrics = metadata.get("gate_metrics", {})
 
-            trained_at = datetime.now(tz=timezone.utc).isoformat()
+            trained_at = datetime.now(tz=UTC).isoformat()
             self._model_info = {
                 "version": self._model_version,
                 "trained_at": trained_at,
