@@ -12,6 +12,7 @@ from src.config.pipeline_config import load_pipeline_config
 from src.data_ingestion.extract import DataIngestor
 from src.data_processing.clean import DataCleaner
 from src.data_processing.transform import DataTransformer
+from src.deployment.export_model import export_approved_model
 from src.evaluation.evaluate import ModelEvaluator
 from src.training.experiment_runner import ExperimentRunner
 from src.features.feature_engineering import FeatureBuilder
@@ -122,6 +123,10 @@ def run_pipeline() -> None:
     }
     joblib.dump(model_data, model_path)
     logger.info("model_saved", path=str(model_path))
+
+    # Export the approved model for deployment if it passed evaluation
+    if passed:
+        export_approved_model()
 
     logger.info("ml_pipeline_completed", passed_evaluation=passed)
 
