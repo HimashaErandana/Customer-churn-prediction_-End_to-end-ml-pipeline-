@@ -55,7 +55,7 @@ class FeatureBuilder(PipelineStage):
             raise
         except Exception as e:
             raise FeatureEngineeringError(
-                f"Feature engineering failed: {str(e)}",
+                f"Feature engineering failed: {e!s}",
                 details={"error": str(e)},
             ) from e
 
@@ -93,6 +93,6 @@ class FeatureBuilder(PipelineStage):
             raise
         except Exception as e:
             raise FeatureEngineeringError(
-                f"Failed to split features and target: {str(e)}",
+                f"Failed to split features and target: {e!s}",
                 details={"error": str(e)},
             ) from e

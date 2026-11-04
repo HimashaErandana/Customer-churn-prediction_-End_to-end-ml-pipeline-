@@ -77,7 +77,7 @@ async def model_info() -> ModelInfoResponse:
     except ModelLoadError:
         raise
     except Exception as e:
-        raise ModelLoadError(f"Failed to get model info: {str(e)}") from e
+        raise ModelLoadError(f"Failed to get model info: {e!s}") from e
 
 
 def _encode_input_data(input_data: pd.DataFrame) -> pd.DataFrame:
@@ -128,7 +128,7 @@ async def predict(request: PredictionRequest) -> PredictionResponse:
     except ModelLoadError:
         raise
     except Exception as e:
-        raise PredictionError(f"Prediction failed: {str(e)}") from e
+        raise PredictionError(f"Prediction failed: {e!s}") from e
 
 
 @app.post("/predict/batch", response_model=BatchPredictionResponse)
@@ -172,7 +172,7 @@ async def predict_batch(
     except ModelLoadError:
         raise
     except Exception as e:
-        raise PredictionError(f"Batch prediction failed: {str(e)}") from e
+        raise PredictionError(f"Batch prediction failed: {e!s}") from e
 
 
 if __name__ == "__main__":

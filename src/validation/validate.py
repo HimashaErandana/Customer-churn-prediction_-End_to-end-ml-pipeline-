@@ -53,7 +53,7 @@ class DataValidator(PipelineStage):
             raise
         except Exception as e:
             raise DataValidationError(
-                f"Validation failed: {str(e)}",
+                f"Validation failed: {e!s}",
                 details={"error": str(e)},
             ) from e
 

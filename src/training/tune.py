@@ -3,7 +3,10 @@
 from typing import Any
 
 import pandas as pd
-from sklearn.model_selection import GridSearchCV, StratifiedKFold  # type: ignore[import-untyped]
+from sklearn.model_selection import (  # type: ignore[import-untyped]
+    GridSearchCV,
+    StratifiedKFold,
+)
 from xgboost import XGBClassifier
 
 from src.config.pipeline_config import PipelineConfig
@@ -86,6 +89,6 @@ class HyperparameterTuner(PipelineStage):
 
         except Exception as e:
             raise ModelTrainingError(
-                f"Hyperparameter tuning failed: {str(e)}",
+                f"Hyperparameter tuning failed: {e!s}",
                 details={"error": str(e)},
             ) from e

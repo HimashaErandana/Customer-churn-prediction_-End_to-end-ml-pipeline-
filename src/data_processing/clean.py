@@ -57,7 +57,7 @@ class DataCleaner(PipelineStage):
             raise
         except Exception as e:
             raise DataProcessingError(
-                f"Data cleaning failed: {str(e)}",
+                f"Data cleaning failed: {e!s}",
                 details={"error": str(e)},
             ) from e
 
@@ -78,7 +78,7 @@ class DataCleaner(PipelineStage):
             return df
         except Exception as e:
             raise DataProcessingError(
-                f"Failed to convert TotalCharges: {str(e)}",
+                f"Failed to convert TotalCharges: {e!s}",
                 details={"column": "TotalCharges", "error": str(e)},
             ) from e
 
@@ -110,7 +110,7 @@ class DataCleaner(PipelineStage):
             return df
         except Exception as e:
             raise DataProcessingError(
-                f"Failed to handle missing values: {str(e)}",
+                f"Failed to handle missing values: {e!s}",
                 details={"error": str(e)},
             ) from e
 
@@ -137,6 +137,6 @@ class DataCleaner(PipelineStage):
             return df
         except Exception as e:
             raise DataProcessingError(
-                f"Failed to encode target column: {str(e)}",
+                f"Failed to encode target column: {e!s}",
                 details={"column": "Churn", "error": str(e)},
             ) from e

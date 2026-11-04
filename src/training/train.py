@@ -113,7 +113,7 @@ class ModelTrainer(PipelineStage):
             raise
         except Exception as e:
             raise ModelTrainingError(
-                f"Model training failed: {str(e)}",
+                f"Model training failed: {e!s}",
                 details={"error": str(e)},
             ) from e
 

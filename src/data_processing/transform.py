@@ -1,7 +1,10 @@
 """Data transformation module for encoding and scaling."""
 
 import pandas as pd
-from sklearn.preprocessing import LabelEncoder, StandardScaler  # type: ignore[import-untyped]
+from sklearn.preprocessing import (  # type: ignore[import-untyped]
+    LabelEncoder,
+    StandardScaler,
+)
 
 from src.config.pipeline_config import PipelineConfig
 from src.pipeline.base import PipelineStage
@@ -59,7 +62,7 @@ class DataTransformer(PipelineStage):
             raise
         except Exception as e:
             raise DataProcessingError(
-                f"Data transformation failed: {str(e)}",
+                f"Data transformation failed: {e!s}",
                 details={"error": str(e)},
             ) from e
 
@@ -81,7 +84,7 @@ class DataTransformer(PipelineStage):
             return df
         except Exception as e:
             raise DataProcessingError(
-                f"Failed to drop customerID: {str(e)}",
+                f"Failed to drop customerID: {e!s}",
                 details={"error": str(e)},
             ) from e
 
@@ -114,6 +117,6 @@ class DataTransformer(PipelineStage):
             return df
         except Exception as e:
             raise DataProcessingError(
-                f"Failed to encode categorical variables: {str(e)}",
+                f"Failed to encode categorical variables: {e!s}",
                 details={"error": str(e)},
             ) from e

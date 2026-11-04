@@ -73,7 +73,7 @@ class ModelEvaluator(PipelineStage):
             raise
         except Exception as e:
             raise ModelEvaluationError(
-                f"Model evaluation failed: {str(e)}",
+                f"Model evaluation failed: {e!s}",
                 details={"error": str(e)},
             ) from e
 

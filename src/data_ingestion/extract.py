@@ -60,6 +60,6 @@ class DataIngestor(PipelineStage):
             raise
         except Exception as e:
             raise DataIngestionError(
-                f"Failed to load data from {source_path}: {str(e)}",
+                f"Failed to load data from {source_path}: {e!s}",
                 details={"source_path": source_path, "error": str(e)},
             ) from e

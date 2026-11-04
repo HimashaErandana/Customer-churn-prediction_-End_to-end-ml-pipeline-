@@ -89,6 +89,6 @@ class ExperimentRunner(PipelineStage):
             raise
         except Exception as e:
             raise ModelTrainingError(
-                f"Experiment runner failed: {str(e)}",
+                f"Experiment runner failed: {e!s}",
                 details={"error": str(e)},
             ) from e
