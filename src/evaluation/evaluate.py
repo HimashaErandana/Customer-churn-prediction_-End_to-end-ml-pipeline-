@@ -3,8 +3,8 @@
 from typing import Any
 
 import pandas as pd
-from sklearn.metrics import (  # type: ignore[import-untyped]
-    accuracy_score,
+from sklearn.metrics import accuracy_score  # type: ignore[import-untyped]
+from sklearn.metrics import (
     f1_score,
     precision_score,
     recall_score,

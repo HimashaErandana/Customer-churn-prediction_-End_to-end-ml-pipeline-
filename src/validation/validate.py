@@ -109,7 +109,10 @@ class DataValidator(PipelineStage):
         if not pd.api.types.is_numeric_dtype(df["SeniorCitizen"]):
             raise DataValidationError(
                 "SeniorCitizen must be numeric",
-                details={"column": "SeniorCitizen", "dtype": str(df["SeniorCitizen"].dtype)},
+                details={
+                    "column": "SeniorCitizen",
+                    "dtype": str(df["SeniorCitizen"].dtype),
+                },
             )
 
         if not pd.api.types.is_numeric_dtype(df["tenure"]):
@@ -121,7 +124,10 @@ class DataValidator(PipelineStage):
         if not pd.api.types.is_numeric_dtype(df["MonthlyCharges"]):
             raise DataValidationError(
                 "MonthlyCharges must be numeric",
-                details={"column": "MonthlyCharges", "dtype": str(df["MonthlyCharges"].dtype)},
+                details={
+                    "column": "MonthlyCharges",
+                    "dtype": str(df["MonthlyCharges"].dtype),
+                },
             )
 
     def _validate_no_duplicates(self, df: pd.DataFrame) -> None:

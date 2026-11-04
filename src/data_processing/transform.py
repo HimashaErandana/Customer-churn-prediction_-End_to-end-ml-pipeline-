@@ -107,7 +107,9 @@ class DataTransformer(PipelineStage):
                 le = LabelEncoder()
                 df[col] = le.fit_transform(df[col])
                 self.label_encoders[col] = le
-                self.logger.debug("Encoded column", column=col, classes=list(le.classes_))
+                self.logger.debug(
+                    "Encoded column", column=col, classes=list(le.classes_)
+                )
 
             self.logger.info(
                 "Encoded categorical variables",

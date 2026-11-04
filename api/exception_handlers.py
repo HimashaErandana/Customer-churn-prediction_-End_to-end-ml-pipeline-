@@ -24,7 +24,9 @@ def register_exception_handlers(app: FastAPI) -> None:
     """
 
     @app.exception_handler(MLPipelineError)
-    async def ml_pipeline_error_handler(request: Request, exc: MLPipelineError) -> JSONResponse:
+    async def ml_pipeline_error_handler(
+        request: Request, exc: MLPipelineError
+    ) -> JSONResponse:
         """Handle ML pipeline errors."""
         return JSONResponse(
             status_code=500,
@@ -120,7 +122,9 @@ def register_exception_handlers(app: FastAPI) -> None:
         )
 
     @app.exception_handler(ModelLoadError)
-    async def model_load_error_handler(request: Request, exc: ModelLoadError) -> JSONResponse:
+    async def model_load_error_handler(
+        request: Request, exc: ModelLoadError
+    ) -> JSONResponse:
         """Handle model load errors."""
         return JSONResponse(
             status_code=503,
@@ -132,7 +136,9 @@ def register_exception_handlers(app: FastAPI) -> None:
         )
 
     @app.exception_handler(PredictionError)
-    async def prediction_error_handler(request: Request, exc: PredictionError) -> JSONResponse:
+    async def prediction_error_handler(
+        request: Request, exc: PredictionError
+    ) -> JSONResponse:
         """Handle prediction errors."""
         return JSONResponse(
             status_code=500,

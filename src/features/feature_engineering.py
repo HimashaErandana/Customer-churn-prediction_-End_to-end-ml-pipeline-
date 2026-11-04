@@ -59,7 +59,9 @@ class FeatureBuilder(PipelineStage):
                 details={"error": str(e)},
             ) from e
 
-    def _split_features_target(self, df: pd.DataFrame) -> tuple[pd.DataFrame, pd.Series]:
+    def _split_features_target(
+        self, df: pd.DataFrame
+    ) -> tuple[pd.DataFrame, pd.Series]:
         """Split DataFrame into features (X) and target (y).
 
         Args:

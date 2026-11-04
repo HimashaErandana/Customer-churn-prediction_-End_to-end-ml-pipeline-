@@ -22,7 +22,8 @@ from src.utils.exceptions import ModelLoadError, PredictionError
 from src.utils.logger import get_logger
 
 logger = get_logger(__name__)
-#main--yyyy
+# main--yyyy
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:

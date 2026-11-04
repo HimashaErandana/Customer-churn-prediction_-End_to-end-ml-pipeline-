@@ -22,42 +22,33 @@ class DataIngestionError(MLPipelineError):
     """Raised when data ingestion fails."""
 
 
-
 class DataValidationError(MLPipelineError):
     """Raised when data validation fails."""
-
 
 
 class DataProcessingError(MLPipelineError):
     """Raised when data processing fails."""
 
 
-
 class FeatureEngineeringError(MLPipelineError):
     """Raised when feature engineering fails."""
-
 
 
 class ModelTrainingError(MLPipelineError):
     """Raised when model training fails."""
 
 
-
 class ModelEvaluationError(MLPipelineError):
     """Raised when model evaluation fails."""
-
 
 
 class ModelLoadError(MLPipelineError):
     """Raised when model loading fails."""
 
 
-
 class PredictionError(MLPipelineError):
     """Raised when prediction fails."""
 
 
-
 class ConfigurationError(MLPipelineError):
     """Raised when configuration is invalid."""
-

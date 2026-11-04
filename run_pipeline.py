@@ -88,9 +88,8 @@ def run_pipeline() -> None:
     best = max(experiment_results, key=lambda r: r["metrics"]["roc_auc"])
     model = best["model"]
     train_metrics = best["metrics"]
-    print(
-        f"Best model chosen: {best['experiment_name']} with roc_auc={best['metrics']['roc_auc']:.4f}"
-    )
+    roc_auc = best["metrics"]["roc_auc"]
+    print(f"Best model chosen: {best['experiment_name']} with roc_auc={roc_auc:.4f}")
     logger.info(
         "stage_completed",
         stage="train",
