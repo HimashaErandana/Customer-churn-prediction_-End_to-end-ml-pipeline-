@@ -108,7 +108,7 @@ jobs:
 
       - name: Validate model artifact contents
         run: |
-          python -c "
+          python3 << 'PYEOF'
 import joblib
 from pathlib import Path
 
@@ -124,10 +124,10 @@ metadata = data.get('metadata', {})
 if 'best_experiment' not in metadata:
     raise SystemExit('ERROR: Missing best_experiment in model artifact metadata')
 
-print(f'Model artifact valid: experiment={metadata[\"best_experiment\"]}')
-print(f'Features: {len(data[\"feature_names\"])}')
-print(f'Encoders: {len(data[\"label_encoders\"])}')
-"
+print(f'Model artifact valid: experiment={metadata["best_experiment"]}')
+print(f'Features: {len(data["feature_names"])}')
+print(f'Encoders: {len(data["label_encoders"])}')
+PYEOF
 
   build-and-push:
     name: Build and Push Docker Image
