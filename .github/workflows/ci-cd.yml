@@ -78,8 +78,8 @@ jobs:
       - name: Run unit tests with coverage
         run: pytest tests/unit/ --cov=src --cov=api --cov-fail-under=80
 
-  train-and-export:
-    name: Train Model & Export Artifact
+  verify-model:
+    name: Verify Approved Model Artifact
     runs-on: ubuntu-latest
     needs: test
     if: github.ref == 'refs/heads/main'
@@ -95,41 +95,48 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r requirements.txt joblib
 
-      - name: Restore training data
+      - name: Verify approved deployment model artifact exists
         run: |
-          echo "${{ secrets.TRAINING_DATA_B64 }}" | base64 -d > data/raw/WA_Fn-UseC_-Telco-Customer-Churn.csv
-        env:
-          TRAINING_DATA_B64: ${{ secrets.TRAINING_DATA_B64 }}
+          ARTIFACT="deployment/model/model.pkl"
+          if [ ! -f "$ARTIFACT" ]; then
+            echo "ERROR: Approved model artifact not found at $ARTIFACT"
+            echo "Train and export the model locally, then commit deployment/model/model.pkl before pushing."
+            exit 1
+          fi
 
-      - name: Run training pipeline
-        run: python run_pipeline.py
+      - name: Validate model artifact contents
+        run: |
+          python -c "
+import joblib
+from pathlib import Path
 
-      - name: Export approved model artifact
-        run: python -m src.deployment.export_model
+artifact = Path('deployment/model/model.pkl')
+data = joblib.load(artifact)
 
-      - name: Upload model artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: deployment-model
-          path: deployment/model/model.pkl
-          retention-days: 7
+required_keys = ['model', 'label_encoders', 'feature_names', 'metadata']
+for key in required_keys:
+    if key not in data:
+        raise SystemExit(f'ERROR: Missing required key in model artifact: {key}')
+
+metadata = data.get('metadata', {})
+if 'best_experiment' not in metadata:
+    raise SystemExit('ERROR: Missing best_experiment in model artifact metadata')
+
+print(f'Model artifact valid: experiment={metadata[\"best_experiment\"]}')
+print(f'Features: {len(data[\"feature_names\"])}')
+print(f'Encoders: {len(data[\"label_encoders\"])}')
+"
 
   build-and-push:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
-    needs: train-and-export
+    needs: verify-model
     if: github.ref == 'refs/heads/main'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Download model artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: deployment-model
-          path: deployment/model
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4

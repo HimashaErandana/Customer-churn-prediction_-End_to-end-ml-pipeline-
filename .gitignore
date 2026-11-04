@@ -25,9 +25,10 @@ data/external/*
 model/*
 !model/.gitkeep
 
-# Deployment artifacts (gitignored — generated locally by export_model.py)
+# Deployment artifacts (approved model is tracked in git after local export)
 deployment/model/*
 !deployment/model/.gitkeep
+!deployment/model/model.pkl
 
 # MLflow
 mlruns/
