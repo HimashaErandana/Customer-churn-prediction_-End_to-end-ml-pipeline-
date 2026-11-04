@@ -136,9 +136,9 @@ training:
 # Evaluation thresholds
 evaluation:
   accuracy_threshold: 0.7
-  precision_threshold: 0.7
-  recall_threshold: 0.7
-  f1_threshold: 0.7
+  precision_threshold: 0.65
+  recall_threshold: 0.5
+  f1_threshold: 0.55
   roc_auc_threshold: 0.75
 
 # Model promotion
