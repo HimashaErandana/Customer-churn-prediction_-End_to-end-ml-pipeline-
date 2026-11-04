@@ -1,10 +1,12 @@
 """Custom exceptions for the ML pipeline."""
 
+from typing import Any
+
 
 class MLPipelineError(Exception):
     """Base exception for all ML pipeline errors."""
 
-    def __init__(self, message: str, details: dict | None = None) -> None:
+    def __init__(self, message: str, details: dict[str, Any] | None = None) -> None:
         """Initialize the exception.
 
         Args:

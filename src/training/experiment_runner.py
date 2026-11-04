@@ -57,7 +57,13 @@ class ExperimentRunner(PipelineStage):
                     X, y, experiment.hyperparameters, experiment_name=experiment.name
                 )
 
-                run_id = mlflow.last_active_run().info.run_id
+                last_run = mlflow.last_active_run()
+                if last_run is None or last_run.info is None:
+                    raise ModelTrainingError(
+                        "No active MLflow run found after training",
+                        details={"experiment": experiment.name},
+                    )
+                run_id = last_run.info.run_id
 
                 results.append(
                     {

@@ -8,7 +8,7 @@ at serving time.
 
 from pathlib import Path
 
-import joblib
+import joblib  # type: ignore[import-untyped]
 
 from src.utils.exceptions import ModelTrainingError
 from src.utils.logger import get_logger

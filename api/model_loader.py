@@ -9,7 +9,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-import joblib
+import joblib  # type: ignore[import-untyped]
 
 from src.utils.exceptions import ModelLoadError
 from src.utils.logger import get_logger

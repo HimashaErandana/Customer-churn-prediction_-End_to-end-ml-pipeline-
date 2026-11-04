@@ -3,7 +3,7 @@
 from typing import Any
 
 import pandas as pd
-from sklearn.model_selection import GridSearchCV, StratifiedKFold
+from sklearn.model_selection import GridSearchCV, StratifiedKFold  # type: ignore[import-untyped]
 from xgboost import XGBClassifier
 
 from src.config.pipeline_config import PipelineConfig
@@ -74,7 +74,7 @@ class HyperparameterTuner(PipelineStage):
 
             grid_search.fit(X, y)
 
-            best_params = grid_search.best_params_
+            best_params: dict[str, Any] = grid_search.best_params_
 
             self.logger.info(
                 "Hyperparameter tuning completed",

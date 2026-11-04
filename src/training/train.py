@@ -5,7 +5,7 @@ from typing import Any
 import mlflow
 import mlflow.xgboost
 import pandas as pd
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split  # type: ignore[import-untyped]
 from xgboost import XGBClassifier
 
 from src.config.pipeline_config import PipelineConfig
@@ -130,7 +130,7 @@ class ModelTrainer(PipelineStage):
         Returns:
             Dictionary of evaluation metrics.
         """
-        from sklearn.metrics import (
+        from sklearn.metrics import (  # type: ignore[import-untyped]
             accuracy_score,
             f1_score,
             precision_score,

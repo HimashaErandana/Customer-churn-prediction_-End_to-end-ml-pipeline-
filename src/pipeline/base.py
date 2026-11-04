@@ -25,14 +25,15 @@ class PipelineStage(ABC):
         self.logger = get_logger(self.__class__.__name__)
 
     @abstractmethod
-    def run(self, data: Any) -> Any:
+    def run(self, *args: Any, **kwargs: Any) -> Any:
         """Execute this stage and return its output.
 
         Args:
-            data: Input data for this stage.
+            *args: Positional arguments for the stage.
+            **kwargs: Keyword arguments for the stage.
 
         Returns:
-            Output data from this stage.
+            Output data from the stage.
 
         Raises:
             MLPipelineError: If the stage fails.

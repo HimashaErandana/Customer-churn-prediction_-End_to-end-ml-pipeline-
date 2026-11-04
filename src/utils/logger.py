@@ -1,9 +1,10 @@
 """Shared logger for the ML pipeline."""
 
 import logging
-from typing import Any
+from typing import Any, cast
 
 import structlog
+from structlog.stdlib import BoundLogger
 
 
 def setup_logging(level: str = "INFO", json_output: bool = False) -> None:
@@ -33,7 +34,7 @@ def setup_logging(level: str = "INFO", json_output: bool = False) -> None:
     )
 
 
-def get_logger(name: str, **kwargs: Any) -> structlog.stdlib.BoundLogger:
+def get_logger(name: str, **kwargs: Any) -> BoundLogger:
     """Get a bound logger instance.
 
     Args:
@@ -43,4 +44,4 @@ def get_logger(name: str, **kwargs: Any) -> structlog.stdlib.BoundLogger:
     Returns:
         A bound logger instance.
     """
-    return structlog.get_logger(name, **kwargs)
+    return cast(BoundLogger, structlog.get_logger(name, **kwargs))

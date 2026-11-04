@@ -1,7 +1,7 @@
 """Data transformation module for encoding and scaling."""
 
 import pandas as pd
-from sklearn.preprocessing import LabelEncoder, StandardScaler
+from sklearn.preprocessing import LabelEncoder, StandardScaler  # type: ignore[import-untyped]
 
 from src.config.pipeline_config import PipelineConfig
 from src.pipeline.base import PipelineStage
