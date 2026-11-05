@@ -12,6 +12,7 @@ htmlcov/
 
 # Environment / secrets
 .env
+cred/
 
 # Data (gitignored except .gitkeep)
 data/raw/*
