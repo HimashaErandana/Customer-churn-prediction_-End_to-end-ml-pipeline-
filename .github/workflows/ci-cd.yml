@@ -1,3 +1,4 @@
+
 name: CI/CD Pipeline
 
 on:
@@ -8,7 +9,7 @@ on:
 
 env:
   ECR_REPOSITORY: churn-prediction-api
-  AWS_REGION: us-east-1
+  AWS_REGION: ap-southeast-2
 
 jobs:
   lint:
@@ -189,26 +190,27 @@ jobs:
           echo "${EC2_SSH_KEY}" > /tmp/ec2_key
           chmod 600 /tmp/ec2_key
 
-          ssh -o StrictHostKeyChecking=no -i /tmp/ec2_key ec2-user@${EC2_HOST} << 'EOF'
+          ssh -o StrictHostKeyChecking=no -i /tmp/ec2_key ec2-user@${EC2_HOST} "bash -s -- '${IMAGE_URI}'" << 'EOF'
             set -e
-            IMAGE_URI="${IMAGE_URI}"
 
-            aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker login --username AWS --password-stdin ${{ steps.login-ecr.outputs.registry }}
+            IMAGE_URI="$1"
 
-            docker pull ${IMAGE_URI}
+            aws ecr get-login-password --region ap-southeast-2 | sudo docker login --username AWS --password-stdin 782083515169.dkr.ecr.ap-southeast-2.amazonaws.com
 
-            docker stop churn-api || true
-            docker rm churn-api || true
+            sudo docker pull "${IMAGE_URI}"
 
-            docker run -d \
+            sudo docker stop churn-api || true
+            sudo docker rm churn-api || true
+
+            sudo docker run -d \
               --name churn-api \
               -p 80:8000 \
               -e ENVIRONMENT=production \
               -e API_HOST=0.0.0.0 \
               -e API_PORT=8000 \
               --restart unless-stopped \
-              ${IMAGE_URI}
+              "${IMAGE_URI}"
 
             sleep 10
-            curl -f http://localhost:8000/health || exit 1
+            curl -f http://localhost/health
           EOF
